@@ -1,5 +1,5 @@
 % Simulation to test the derived equations
-% 6.11.2018
+% 12.11.2018
 % Hilkka Hännikäinen
 
 close all;
@@ -72,10 +72,10 @@ end
 
 for j=1:p
     index{j} = included_sp(parcels{j}); % indices of the points in original source space
-    crds{j} = mesh_ds.p(index{j}); % extraxt coordinates
-    cntr{j} = (max(crds{j}+min(crds{j})))/2; % calculate the geometric centroid
+    crds{j} = mesh_ds.p(index{j},:); % extraxt coordinates
+    cntr{j} = min(crds{j}) + (max(crds{j}-min(crds{j})))/2; % calculate the geometric centroid
     % find the index of a source point closest to the centroid coordinates
-    dst = norm(crds{j}-repmat(cntr{j}, sp_parcels(j), 1));
+    dst = vecnorm(crds{j}-repmat(cntr{j}, sp_parcels(j), 1), 2, 2);
     [~, ind_min] = min(dst);
     cntr_crds(j,:) = crds{j}(ind_min,:);
     id(j) = index{j}(ind_min);

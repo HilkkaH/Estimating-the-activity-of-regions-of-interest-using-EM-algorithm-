@@ -1,5 +1,5 @@
 % code to test the validity of the maximumlikelihood method
-% 6.11.2018
+% 12.11.2018
 % Hilkka Hännikäinen
 
 close all;
@@ -98,6 +98,9 @@ for j=1:p
     cntr(j) = index{j}(ind);
     not_in_ROI_ss{j} = setdiff(1:dim, index{j}); % points outside the ROI in source space
     not_in_ROI_ds{j} = setdiff(1:q, parcels{j}); % points outside the ROI in down sampled source space
+end
+for j=1:p
+   Q = Q + 1/100.*G(:, not_in_ROI_ds{j})*G(:, not_in_ROI_ds{j})'; 
 end
 clear dip maximums ind % clear out unnecessary variables
 
